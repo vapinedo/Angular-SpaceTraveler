@@ -1,0 +1,16 @@
+<section>
+    <h2>{{ title }}</h2>
+
+    <article
+        *ngIf="property$ | async as property; else loading"
+        class="box animate__animated animate__fadeIn animate_faster">
+        <h3>{{ property.category }}</h3>
+        <p>${{ property.price }}</p>
+        <img *ngFor="let img of property.images" [src]="img" height="120">
+    </article>
+
+    <ng-template #loading>
+        <app-spinner></app-spinner>
+    </ng-template>
+
+  </section>

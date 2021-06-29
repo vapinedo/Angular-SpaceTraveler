@@ -1,0 +1,41 @@
+<section>
+    <h2>{{ title }}</h2>
+
+    <article class="box animate__animated animate__fadeIn animate_faster">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Categoría</mat-label>
+                <input matInput type="text" formControlName="category">
+            </mat-form-field>       
+    
+            <mat-form-field appearance="outline">
+                <mat-label>Precio</mat-label>
+                <input matInput type="text" formControlName="price">
+            </mat-form-field>       
+
+            <mat-form-field appearance="outline" class="file-wrapper">
+                <article class="fileupload">
+                    <button [disabled]="showSpinner">
+                        Subir fotos
+                        <input (input)="onFileChange($event)" type="file" multiple [accept]="allowedFormats">
+                    </button>
+                    <img *ngFor="let url of imgPreviewUrls" [src]="url">
+                </article>
+                
+                <input [hidden]="true" readonly matInput type="text" formControlName="images">
+            </mat-form-field>       
+            <!-- <p *ngIf="isInvalidFormats">Solo puede subir imágenes JPEG, JPG o PNG</p> -->
+
+            <div class="footer">
+                <app-spinner *ngIf="showSpinner"></app-spinner>
+                <button 
+                    *ngIf="!showSpinner" 
+                    [disabled]="form.invalid" 
+                    type="submit" color="primary" mat-raised-button>Crear</button>
+            </div>
+            
+        </form>
+    </article>
+
+  </section>

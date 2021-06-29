@@ -1,0 +1,17 @@
+<section class="animate__animated animate__fadeIn animate_faster">
+
+    <article class="form-wrapper animate__animated animate__fadeIn animate_faster">
+        <h2 class="title">{{ title }}</h2>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+                <input type="text" formControlName="email">
+    
+                <input type="password" formControlName="password">
+                
+            <div class="footer">
+                <button type="submit" color="primary" mat-raised-button>Ingresar</button>
+            </div>
+        </form>
+    </article>
+    
+</section>
