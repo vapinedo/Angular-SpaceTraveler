@@ -5,13 +5,8 @@ export class StorageService {
 
   constructor() { }
 
-  keyExists(key: string): boolean {
-    const item = localStorage.getItem(key);
-    return (item !== null) ? true : false;
-  }
-
   getItem(key: string): any {
-    return JSON.parse(localStorage.getItem(key));
+    return JSON.parse(localStorage.getItem(key) || '{}');
   }   
 
   setItem(key: string, value: any): void {

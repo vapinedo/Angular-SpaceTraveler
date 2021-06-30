@@ -1,5 +1,5 @@
-import Swal from 'sweetalert2';
 import { Injectable } from '@angular/core';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -16,15 +16,15 @@ export class MessageService {
     return this.toastr.error(message);
   }
 
-  confirm() {
+  confirm(): Promise<SweetAlertResult<any>> {
     return Swal.fire({
-      title: '¿Está seguro?',
-      text: "Estás a punto de eliminar un registro",
       icon: 'warning',
+      title: '¿Está seguro?',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Confirmar'
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Confirmar',
+      text: "Estás a punto de eliminar un registro"
     }); 
   } 
 

@@ -20,8 +20,8 @@ const routes: Routes = [
       }      
     ]
   },
-  { path: '', redirectTo: '/admin/aeronaves',  pathMatch: 'full' },
-  { path: '***', redirectTo: '/admin/aeronaves' }
+  { path: '', redirectTo: '/auth/login',  pathMatch: 'full' },
+  { path: '***', redirectTo: '/auth/login' }
 ];
 
 @NgModule({

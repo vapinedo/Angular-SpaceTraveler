@@ -1,0 +1,13 @@
+.logout {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+
+    &:hover i {
+        color: rgba(255,255,255,.70);
+    }
+    i {
+        font-size: 1.6em;
+        color: rgba(255,255,255,.55);
+    }
+}

@@ -1,0 +1,48 @@
+<section class="animate__animated animate__fadeIn animate_faster">
+
+    <article class="box form-wrapper animate__animated animate__fadeInRight animate_faster">
+        <h2 class="title">{{ title }}</h2>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+            <div class="mb-3">
+                <label class="form-label">Nombres *</label>
+                <input type="text" formControlName="nombre" class="form-control">
+                <!-- <div class="form-text text-danger">Nombres es requerido</div> -->
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Apellidos *</label>
+                <input type="text" formControlName="apellidos" class="form-control">
+                <!-- <div class="form-text text-danger">Apellidos es requerido</div> -->
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email *</label>
+                <input type="text" formControlName="email" class="form-control">
+                <!-- <div class="form-text text-danger">Email es requerido</div> -->
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Contraseña *</label>
+                <input type="password" formControlName="password" class="form-control">
+                <!-- <div class="form-text text-danger">Contraseña es requerido</div> -->
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirmar contraseña *</label>
+                <input type="password" formControlName="confirmar_password" class="form-control">
+                <!-- <div class="form-text text-danger">Confirmar contraseña es requerido</div> -->
+            </div>
+            
+            <div class="form-footer">
+                <app-spinner *ngIf="showSpinner"></app-spinner>
+                <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Registrarme</button>
+                <p>
+                    Ya tienes una cuenta?
+                    <a routerLink="/auth/login">Accede</a>
+                </p>
+            </div>
+        </form>
+    </article>
+    
+</section>

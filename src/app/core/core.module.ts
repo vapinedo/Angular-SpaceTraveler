@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './guards/auth.guard';
 
 import { AuthService } from './services/auth.service';
+import { StorageService } from './services/storage.service';
 import { MessageService } from './services/message.service';
 import { SidebarService } from './services/sidebar.service';
 import { AeronaveService } from './services/aeronave.service';
@@ -18,6 +19,7 @@ import { FileuploaderService } from './services/fileuploader.service';
   providers: [
     AuthGuard,
     AuthService,
+    StorageService,
     MessageService,
     SidebarService,
     DatetimeService,
