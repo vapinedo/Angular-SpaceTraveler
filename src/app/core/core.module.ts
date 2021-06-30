@@ -7,8 +7,8 @@ import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { StorageService } from './services/storage.service';
 import { MessageService } from './services/message.service';
-import { SidebarService } from './services/sidebar.service';
 import { AeronaveService } from './services/aeronave.service';
+import { AlquilerService } from './services/alquiler.service';
 import { DatetimeService } from './services/datetime.service';
 import { ValidatorsService } from './services/validators.service';
 import { FileuploaderService } from './services/fileuploader.service';
@@ -23,8 +23,8 @@ import { FileuploaderService } from './services/fileuploader.service';
     AuthService,
     StorageService,
     MessageService,
-    SidebarService,
     DatetimeService,
+    AlquilerService,
     AeronaveService,
     ValidatorsService,
     FileuploaderService

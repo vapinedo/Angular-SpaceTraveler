@@ -1,0 +1,20 @@
+<article class="box animate__animated animate__fadeIn animate_faster">
+
+    <header class="section_header">
+        <h2>{{ title }}</h2>
+        <button routerLink="/admin/usuarios" class="btn btn-danger">Atrás</button>
+    </header>
+
+    <div *ngIf="user$ | async as user; else loading">
+        <div class="col-md-8">
+            <h3>{{ user.nombre }} {{ user.apellidos }}</h3>
+            <p class="text-muted">Rol: {{ user.rol }}</p>
+            <p class="text-muted">Email: {{ user.email }}</p>
+        </div>
+    </div>
+
+    <ng-template #loading>
+        <app-spinner></app-spinner>
+    </ng-template>
+
+</article>

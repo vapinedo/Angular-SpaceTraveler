@@ -1,0 +1,31 @@
+<article class="box animate__animated animate__fadeIn animate_faster">
+    
+    <header class="section_header">
+        <h2>{{ title }}</h2>
+        <button routerLink="/admin/catalogo" class="btn btn-danger">Atrás</button>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div class="mb-4">
+            <label class="form-label">Destino *</label>
+            <select class="form-select" formControlName="destino">
+                <option *ngFor="let destino of destinos" [value]="destino">{{ destino }}</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Apellidos *</label>
+            <input type="text" formControlName="apellidos" class="form-control">
+            <div *ngIf="form.controls.apellidos?.invalid && (form.controls.apellidos?.dirty || form.controls.apellidos?.touched)" class="form-text text-danger">
+                <span *ngIf="form.controls.apellidos.errors?.required">Apellidos es requerido</span>    
+                <span *ngIf="form.controls.apellidos.errors?.minlength">Mínimo {{ MIN_LENGTH_NOMBRE }} caracteres</span>    
+                <span *ngIf="form.controls.apellidos.errors?.maxlength">Máximo {{ MAX_LENGTH_APELLIDOS }} caracteres</span>    
+            </div>
+        </div>
+
+        <div class="form-footer">
+            <app-spinner *ngIf="showSpinner"></app-spinner>
+            <button *ngIf="!showSpinner" [disabled]="form.invalid" type="submit" class="btn btn-primary">Crear</button>
+        </div>
+    </form>
+</article>

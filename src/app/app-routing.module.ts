@@ -14,19 +14,20 @@ const routes: Routes = [
     component:  AdminComponent,
     children: [
       {  
-        path: 'catalogo',
-        loadChildren: () => import('@feature/admin/catalogo/catalogo.module')
-        .then(m => m.CatalogoModule)
+        path: 'aeronaves',
+        loadChildren: () => import('@feature/admin/aeronave/aeronave.module').then(m => m.AeronaveModule)
       },      
       {  
-        path: 'aeronaves',
-        loadChildren: () => import('@feature/admin/aeronave/aeronave.module')
-        .then(m => m.AeronaveModule)
+        path: 'alquileres',
+        loadChildren: () => import('@feature/admin/alquiler/alquiler.module').then(m => m.AlquilerModule)
+      },      
+      {  
+        path: 'catalogo',
+        loadChildren: () => import('@feature/admin/catalogo/catalogo.module').then(m => m.CatalogoModule)
       },      
       {  
         path: 'usuarios',
-        loadChildren: () => import('@feature/admin/user/user.module')
-        .then(m => m.UserModule)
+        loadChildren: () => import('@feature/admin/user/user.module').then(m => m.UserModule)
       }      
     ]
   },

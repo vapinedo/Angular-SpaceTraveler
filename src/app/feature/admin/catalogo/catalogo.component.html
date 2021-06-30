@@ -7,7 +7,7 @@
         <h5 class="card-title text-primary">{{ nave.nombre }}</h5>
         <p class="card-text price">Valor alquiler: {{ nave.precio | currency }}</p>
         <p class="card-text">{{ nave.descripcion }}</p>
-        <button class="btn btn-outline-primary">Alquilar esta nave</button>
+        <button routerLink="/admin/alquileres/crear" class="btn btn-outline-primary">Alquilar esta nave</button>
       </div>
     </div>
   </article>
