@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { ToastrModule } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 const modules = [
   CommonModule,
   ToastrModule,
   RouterModule,
+  MaterialModule,
   ReactiveFormsModule,
   FormsModule,
   ToastrModule.forRoot({

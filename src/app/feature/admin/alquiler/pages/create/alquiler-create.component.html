@@ -1,31 +1,73 @@
-<article class="box animate__animated animate__fadeIn animate_faster">
+<article class="row box animate__animated animate__fadeIn animate_faster">
     
     <header class="section_header">
         <h2>{{ title }}</h2>
         <button routerLink="/admin/catalogo" class="btn btn-danger">Atrás</button>
     </header>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
-        <div class="mb-4">
-            <label class="form-label">Destino *</label>
-            <select class="form-select" formControlName="destino">
-                <option *ngFor="let destino of destinos" [value]="destino">{{ destino }}</option>
-            </select>
-        </div>
+    <div class="col-md-5" >
+        <h3 class="text-muted nombre-precio">
+            <span>{{ nave?.nombre }}</span> 
+            <small>{{ nave?.precio | currency }}</small>
+        </h3>
+        <img [src]="nave?.imagen" width="100%">
+    </div><!-- .cod-md-5 -->
 
-        <div class="mb-4">
-            <label class="form-label">Apellidos *</label>
-            <input type="text" formControlName="apellidos" class="form-control">
-            <div *ngIf="form.controls.apellidos?.invalid && (form.controls.apellidos?.dirty || form.controls.apellidos?.touched)" class="form-text text-danger">
-                <span *ngIf="form.controls.apellidos.errors?.required">Apellidos es requerido</span>    
-                <span *ngIf="form.controls.apellidos.errors?.minlength">Mínimo {{ MIN_LENGTH_NOMBRE }} caracteres</span>    
-                <span *ngIf="form.controls.apellidos.errors?.maxlength">Máximo {{ MAX_LENGTH_APELLIDOS }} caracteres</span>    
+    <div class="col-md-7">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+            <div class="mb-4">
+                <label class="form-label">Destino *</label>
+                <select class="form-select" formControlName="destino">
+                    <option *ngFor="let destino of destinos" [value]="destino">{{ destino }}</option>
+                </select>
+                <div *ngIf="form.controls.destino?.invalid && (form.controls.destino?.dirty || form.controls.destino?.touched)" class="form-text text-danger">
+                    <span *ngIf="form.controls.destino.errors?.required">Destino es requerido</span>    
+                </div>
             </div>
-        </div>
+            
+            <mat-form-field appearance="outline" class="mb-4">
+                <mat-label>Fecha de partida</mat-label>
+                <input 
+                    readonly 
+                    matInput 
+                    [min]="fechaHoy"
+                    formControlName="fechaPartida"
+                    [matDatepicker]="fechaPartida">
+                <mat-datepicker-toggle matSuffix [for]="fechaPartida"></mat-datepicker-toggle>
+                <mat-datepicker #fechaPartida></mat-datepicker>
+                <mat-error *ngIf="form.controls.fechaPartida?.invalid && (form.controls.fechaPartida?.dirty || form.controls.fechaPartida?.touched)">
+                    <span *ngIf="form.controls.fechaPartida?.errors?.required">Fecha de partida es requerido</span>
+                </mat-error>
+            </mat-form-field>
 
-        <div class="form-footer">
-            <app-spinner *ngIf="showSpinner"></app-spinner>
-            <button *ngIf="!showSpinner" [disabled]="form.invalid" type="submit" class="btn btn-primary">Crear</button>
-        </div>
-    </form>
+            <mat-form-field appearance="outline" class="mb-4">
+                <mat-label>Fecha de regreso *</mat-label>
+                <input 
+                readonly 
+                matInput 
+                formControlName="fechaRegreso"
+                [matDatepicker]="fechaRegreso"
+                [min]="form.controls.fechaPartida.value">
+                <mat-datepicker-toggle matSuffix [for]="fechaRegreso"></mat-datepicker-toggle>
+                <mat-datepicker #fechaRegreso></mat-datepicker>
+                <mat-error *ngIf="form.controls.fechaRegreso?.invalid && (form.controls.fechaRegreso?.dirty || form.controls.fechaRegreso?.touched)">
+                    <span *ngIf="form.controls.fechaRegreso?.errors?.required">Fecha de regreso es requerido</span>
+                </mat-error>
+            </mat-form-field>
+            
+            <div class="mb-4">
+                <label class="form-label">Número de pasajeros *</label>
+                <input type="text" formControlName="numeroPasajeros" class="form-control">
+                <div *ngIf="form.controls.numeroPasajeros?.invalid && (form.controls.numeroPasajeros?.dirty || form.controls.numeroPasajeros?.touched)" class="form-text text-danger">
+                    <span *ngIf="form.controls.numeroPasajeros.errors?.required">Número de pasajeros es requerido</span>    
+                </div>
+            </div>
+    
+            <div class="form-footer">
+                <app-spinner *ngIf="showSpinner"></app-spinner>
+                <button *ngIf="!showSpinner" [disabled]="form.invalid" type="submit" class="btn btn-primary">Alquilar</button>
+            </div>
+        </form>
+    </div><!-- .cod-md-7 -->
+
 </article>
