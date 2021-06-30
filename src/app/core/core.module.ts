@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AuthGuard } from './guards/auth.guard';
 
+import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { StorageService } from './services/storage.service';
 import { MessageService } from './services/message.service';
@@ -18,6 +19,7 @@ import { FileuploaderService } from './services/fileuploader.service';
   ],
   providers: [
     AuthGuard,
+    UserService,
     AuthService,
     StorageService,
     MessageService,

@@ -17,6 +17,11 @@ const routes: Routes = [
         path: 'aeronaves',
         loadChildren: () => import('@feature/admin/aeronave/aeronave.module')
         .then(m => m.AeronaveModule)
+      },      
+      {  
+        path: 'usuarios',
+        loadChildren: () => import('@feature/admin/user/user.module')
+        .then(m => m.UserModule)
       }      
     ]
   },

@@ -45,7 +45,7 @@
 
             <div class="form-footer">
                 <app-spinner *ngIf="showSpinner"></app-spinner>
-                <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Registrarme</button>
+                <button *ngIf="!showSpinner" [disabled]="form.invalid" type="submit" class="btn btn-primary">Registrarme</button>
                 <p>
                     Ya tienes una cuenta?
                     <a routerLink="/auth/login">Accede</a>

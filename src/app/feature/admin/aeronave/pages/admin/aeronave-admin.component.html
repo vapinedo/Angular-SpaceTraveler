@@ -5,7 +5,7 @@
         <button routerLink="/admin/aeronaves/crear" class="btn btn-primary">Crear nuevo</button>
     </header>
 
-    <table class="table">
+    <table class="table" *ngIf="aeronaves.length > 0; else loading">
         <thead>
             <th>Imagen</th>
             <th>Nombre</th>
@@ -28,4 +28,9 @@
             </tr>
         </tbody>
     </table>
+
+    <ng-template #loading>
+        <app-spinner></app-spinner>
+    </ng-template>
+
 </article>

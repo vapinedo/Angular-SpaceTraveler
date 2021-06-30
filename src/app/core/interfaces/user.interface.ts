@@ -1,4 +1,4 @@
-export interface RegisterData {
+export interface User {
     id?: string,
     rol: string;
     email: string,

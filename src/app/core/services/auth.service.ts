@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { StorageService } from './storage.service';
+import { User } from '@core/interfaces/user.interface';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LoginData } from '@core/interfaces/login-data.interface';
-import { RegisterData } from '@core/interfaces/register-data.interface';
-import { StorageService } from './storage.service';
 
 @Injectable()
 export class AuthService {
@@ -16,11 +16,11 @@ export class AuthService {
     private storageSvc: StorageService
   ) {}
 
-  public register(item: RegisterData): Promise<any> {
-    return this.afs.collection<RegisterData>(this.collectionName).add(item);
+  public register(item: User): Promise<any> {
+    return this.afs.collection<User>(this.collectionName).add(item);
   }
 
-  public login(item: LoginData): Observable<RegisterData[]> {
+  public login(item: LoginData): Observable<User[]> {
     return this.afs.collection<any>(this.collectionName)
       .valueChanges()
       .pipe(

@@ -1,41 +1,46 @@
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { SubSink } from 'subsink';
 import { User } from '@core/interfaces/user.interface';
-import { AuthService } from '@core/services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from '@core/services/user.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from '@core/services/message.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from '@core/services/validators.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-user-update',
+  templateUrl: './user-update.component.html',
+  styleUrls: ['./user-update.component.scss']
 })
-export class RegisterComponent {
+export class UserPropertyUpdateComponent implements OnInit, OnDestroy {
 
-  public subscriptions = new Subscription();
+  private subscriptions = new SubSink();
 
-  private readonly defaultRol = 'pasajero';
   public readonly MIN_LENGTH_NOMBRE = 3;
   public readonly MAX_LENGTH_NOMBRE = 20;
   public readonly MAX_LENGTH_APELLIDOS = 50;
   public readonly MIN_LENGTH_PASSWORD = 6;
   public readonly MAX_LENGTH_PASSWORD = 12;
 
+  public userID: any;
   public form: FormGroup;
-  public authError = false;
+  public title = 'Actualizar Usuario';
   public showSpinner: boolean = false;
-  public title = 'Space Traveler - Registro';
-  
-  constructor( 
+
+  public roles: string[] = ['Admin', 'Astronauta', 'Pasajero'];
+
+  constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authSvc: AuthService,
+    private userSvc: UserService,
     private messageSvc: MessageService,
+    private activatedRoute: ActivatedRoute,
     private validatorsSvc: ValidatorsService,
     ) {
+      this.userID = activatedRoute.snapshot.paramMap.get('id');
+
       this.form = this.fb.group({
+        id: [null, [Validators.required]],
         nombre: [null, [
           Validators.required,
           Validators.minLength(this.MIN_LENGTH_NOMBRE), 
@@ -46,7 +51,7 @@ export class RegisterComponent {
           Validators.minLength(this.MIN_LENGTH_NOMBRE), 
           Validators.maxLength(this.MAX_LENGTH_APELLIDOS), 
         ]],
-        rol: [this.defaultRol, [Validators.required]],
+        rol: [null, [Validators.required]],
         email: [null, [
           Validators.required,
           Validators.pattern(this.validatorsSvc.VALID_EMAIL_STRING)
@@ -57,30 +62,59 @@ export class RegisterComponent {
           Validators.maxLength(this.MAX_LENGTH_PASSWORD), 
         ]]
       }); 
-    }
+  }
 
-  async onSubmit() {
+  ngOnInit(): void {
+    this._setForm();
+  }
+
+  private _setForm(): void {
+    this.subscriptions.add(
+      this.userSvc.readOne(this.userID)
+        .subscribe({
+          next: data => {
+            this.form.patchValue({
+              id: this.userID,
+              rol: data?.rol,
+              email: data?.email,
+              nombre: data?.nombre,
+              password: data?.password,
+              apellidos: data?.apellidos
+            });
+          },
+          error: err => this.messageSvc.error(err)
+        })
+    );
+  }
+
+  async onSubmit(): Promise<void> {
     if (this.form.valid) {
+
+      
+      
+      this.form.disable();
       this.showSpinner = true;
       const formData = this.form.value;
-
+      
       try {
-        const userData = this._prepareDataBeforeSend(formData);
-        const response = await this.authSvc.register(userData);
+        const newData = this._prepareDataBeforeSend(formData);
+        const dataCreated = await this.userSvc.update(newData);
 
         this.showSpinner = false;
-        this.messageSvc.success(); 
-        this.router.navigate(['/auth/login']);
+        this.messageSvc.success('Registro actualizado exitosamente');
+        this.router.navigate(['/admin/usuarios']);
       }
-      catch (err) {
+      catch (err) { 
+        this.showSpinner = false;
         this.messageSvc.error(err); 
-      }            
+      }
     }
     return;
   }
 
   private _prepareDataBeforeSend(data: any): User {
     let response: User = {
+      id: data.id,
       rol: data.rol,
       email: data.email,
       nombre: data.nombre,
@@ -88,6 +122,10 @@ export class RegisterComponent {
       apellidos: data.apellidos
     };
     return response;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

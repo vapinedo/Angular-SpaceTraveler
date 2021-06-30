@@ -1,34 +1,34 @@
 import { SubSink } from 'subsink';
+import { User } from '@core/interfaces/user.interface';
+import { UserService } from '@core/services/user.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from '@core/services/message.service';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AeronaveService } from 'src/app/core/services/aeronave.service';
-import { Aeronave } from '@core/interfaces/aeronave.interface';
 
 @Component({
-  selector: 'app-aeronave-admin',
-  templateUrl: './aeronave-admin.component.html',
-  styleUrls: ['./aeronave-admin.component.scss']
+  selector: 'app-user-admin',
+  templateUrl: './user-admin.component.html',
+  styleUrls: ['./user-admin.component.scss']
 })
-export class AeronaveAdminComponent implements OnInit, OnDestroy {
+export class UserAdminComponent implements OnInit, OnDestroy {
 
   private subscriptions = new SubSink();
 
-  public aeronaves: Aeronave[] = [];
+  public users: User[] = [];
   public showSpinner: boolean = false;
-  public title = 'Listado de Aeronaves';
+  public title = 'Listado de Usuarios';
 
   constructor(
-    private messageSvc: MessageService,
-    private aeronaveSvc: AeronaveService
+    private userSvc: UserService,
+    private messageSvc: MessageService
   ) {}
 
   ngOnInit(): void {
-    this.showSpinner = true;
+    // this.showSpinner = true;
     this.subscriptions.add(
-      this.aeronaveSvc.read()
+      this.userSvc.read()
         .subscribe({
           next: data => {
-            this.aeronaves = data;
+            this.users = data;
           },
           error: err => this.messageSvc.error(err),
           complete: () => this.showSpinner = false
@@ -41,7 +41,7 @@ export class AeronaveAdminComponent implements OnInit, OnDestroy {
       this.messageSvc.confirm()
         .then((result) => {
           if (result.isConfirmed) {
-            this.aeronaveSvc.delete(id) 
+            this.userSvc.delete(id) 
               .then(() => {
                 this.messageSvc.success('Registro eliminado exitosamente')
               })

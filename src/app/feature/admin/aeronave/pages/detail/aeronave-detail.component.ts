@@ -21,7 +21,6 @@ export class AeronaveDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params.id;
-    console.log('ID', id)
     this.aeronave$ = this.aeronaveSvc.readOne(id);
   }
 }

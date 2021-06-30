@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { MessageService } from './message.service';
 import { AngularFireStorage, AngularFireUploadTask  } from '@angular/fire/storage';
 
 @Injectable()
@@ -15,7 +14,6 @@ export class FileuploaderService {
   private readonly validFormats: string[] = ['image/jpeg', 'image/png'];
 
   constructor(
-    private messageSvc: MessageService,
     private storage: AngularFireStorage
   ) {}
 
