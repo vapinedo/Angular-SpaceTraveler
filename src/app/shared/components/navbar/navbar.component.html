@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
 
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" routerLink="/catalogo">
             <i class='bx bx-rocket'></i>
             Space Traveler
         </a>
@@ -13,21 +13,26 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active"href="#">Inicio</a>
+                    <a class="nav-link active" routerLink="/catalogo">Inicio</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Nosotros</a>
-                </li>
-                <li class="nav-item">
+                <li *ngIf="isAdmin" class="nav-item">
                     <a class="nav-link" routerLink="/admin/aeronaves">Aeronaves</a>
                 </li>
-                <li class="nav-item">
+                <li *ngIf="isAdmin" class="nav-item">
                     <a class="nav-link" routerLink="/admin/usuarios">Usuarios</a>
                 </li>
             </ul>
                 
             <ul class="navbar-nav d-flex">
-                <li class="nav-item logout" (click)="onLogout()">
+                <li *ngIf="!isAuth" class="nav-item logout">
+                    <a class="nav-link" routerLink="/auth/login">Acceder</a>
+                </li>
+
+                <li *ngIf="!isAuth" class="nav-item logout">
+                    <a class="nav-link" routerLink="/auth/registro">Registrarse</a>
+                </li>
+
+                <li *ngIf="isAuth" class="nav-item logout" (click)="onLogout()">
                     <a class="nav-link">Cerrar Sesión</a>
                     <i class='bx bx-log-out'></i>
                 </li>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
@@ -19,6 +20,7 @@ import { FileuploaderService } from './services/fileuploader.service';
   ],
   providers: [
     AuthGuard,
+    AdminGuard,
     UserService,
     AuthService,
     StorageService,

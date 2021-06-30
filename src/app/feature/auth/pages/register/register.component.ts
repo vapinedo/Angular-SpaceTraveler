@@ -16,7 +16,7 @@ export class RegisterComponent {
 
   public subscriptions = new Subscription();
 
-  private readonly defaultRol = 'pasajero';
+  private readonly defaultRol = 'user';
   public readonly MIN_LENGTH_NOMBRE = 3;
   public readonly MAX_LENGTH_NOMBRE = 20;
   public readonly MAX_LENGTH_APELLIDOS = 50;

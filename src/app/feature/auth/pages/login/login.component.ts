@@ -51,8 +51,8 @@ export class LoginComponent {
             next: (user: any) => {
               if (user.length > 0) {
                 delete user[0].password;
-                this.router.navigate(['/admin/aeronaves']);
-                this.storageSvc.setItem('userLogged', user[0]);
+                this.router.navigate(['/catalogo']);
+                this.storageSvc.setItem('user', user[0]);
               } else {
                 this.messageSvc.error('Usuario o contraseño no válidos'); 
               }

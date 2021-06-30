@@ -9,13 +9,19 @@ import { AuthService } from '@core/services/auth.service';
 })
 export class NavbarComponent {
 
+  public isAuth: boolean = false;
+  public isAdmin: boolean = false;
+
   constructor(
     private router: Router,
     private authSvc: AuthService
-  ) {}
+  ) {
+    this.isAuth = this.authSvc.isAuth();
+    this.isAdmin = this.authSvc.isAdmin();
+  }
 
   onLogout() {
     this.authSvc.logout();
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth/login']);
   }
 }

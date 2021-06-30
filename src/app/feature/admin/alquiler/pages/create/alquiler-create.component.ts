@@ -70,7 +70,7 @@ export class AlquilerCreateComponent implements OnInit, OnDestroy {
 
         this.showSpinner = false;
         this.messageSvc.success('Alquiler creado exitosamente');
-        this.router.navigate(['/admin/catalogo']);
+        this.router.navigate(['/catalogo']);
       }
       catch (err) { 
         this.showSpinner = false;

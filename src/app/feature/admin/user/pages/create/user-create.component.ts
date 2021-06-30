@@ -26,7 +26,7 @@ export class UserCreateComponent implements OnDestroy {
   public title = 'Nuevo Usuario';
   public showSpinner: boolean = false;
 
-  public roles: string[] = ['Admin', 'Astronauta', 'Pasajero'];
+  public roles: string[] = ['Admin', 'User'];
 
   constructor(
     private router: Router,

@@ -4,7 +4,7 @@ import { CanActivate } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
 
   constructor(
     private router: Router,
@@ -13,9 +13,13 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
     const user = this.authSvc.getCurrentUser();
+    const rol = user?.rol;
 
-    if (user) { return true; }
-    this.router.navigate(['/auth/login']);
+    if (rol === 'Admin') {
+      return true;
+    } 
+    this.router.navigate(['/catalogo']);
     return false;
   }
+
 }
