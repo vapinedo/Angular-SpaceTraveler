@@ -9,6 +9,7 @@
         <thead>
             <th>Imagen</th>
             <th>Nombre</th>
+            <th>Precio alquiler</th>
             <th>Tripulantes</th>
             <th>Disponible</th>
             <th>Acciones</th>
@@ -18,6 +19,7 @@
             <tr *ngFor="let nave of aeronaves">
                 <td><img [src]="nave.imagen" width="60"></td>
                 <td>{{ nave.nombre }}</td>
+                <td>{{ nave.precio }}</td>
                 <td>{{ nave.capacidadTripulantes }}</td>
                 <td>{{ nave.disponible ? 'Si' : 'No' }}</td>
                 <td class="actions">

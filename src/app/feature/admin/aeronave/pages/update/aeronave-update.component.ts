@@ -28,6 +28,9 @@ export class AeronavePropertyUpdateComponent implements OnInit, OnDestroy {
   public readonly allowedFormats = '.jpeg,.jpg,.png,.svg';
   private readonly validFormats: string[] = ['image/jpeg', 'image/png'];
 
+  public readonly MIN_LENGTH_DESCRIPCION = 10;
+  public readonly MAX_LENGTH_DESCRIPCION = 120;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -43,6 +46,11 @@ export class AeronavePropertyUpdateComponent implements OnInit, OnDestroy {
       disponible: [false],
       id: [null, [Validators.required]],
       nombre: [null, [Validators.required]],
+      precio: [null, [Validators.required]],
+      descripcion: [null, [
+        Validators.minLength(this.MIN_LENGTH_DESCRIPCION),
+        Validators.maxLength(this.MAX_LENGTH_DESCRIPCION)
+      ]],
       capacidadTripulantes: [null, [Validators.required]]
     }); 
   }
@@ -60,6 +68,8 @@ export class AeronavePropertyUpdateComponent implements OnInit, OnDestroy {
               id: this.aeronaveID,
               imagen: data?.imagen,
               nombre: data?.nombre,
+              precio: data?.precio,
+              descripcion: data?.descripcion,
               capacidadTripulantes: data?.capacidadTripulantes
             });
           },
@@ -126,7 +136,9 @@ export class AeronavePropertyUpdateComponent implements OnInit, OnDestroy {
       id: data.id,
       imagen: fileURL,
       nombre: data.nombre,
+      precio: data.precio,
       disponible: data.disponible,
+      descripcion: data.descripcion,
       capacidadTripulantes: data.capacidadTripulantes
     };
     return response;

@@ -9,8 +9,11 @@
         <img [src]="aeronave.imagen" class="col-md-4">
         <div class="col-md-8">
             <h3>{{ aeronave.nombre }}</h3>
-            <p class="text-muted">Capacidad de Tripulantes: {{ aeronave.capacidadTripulantes }}</p>
-            <p class="text-muted">Disponible: {{ aeronave.disponible ? 'Si' : 'No' }}</p>
+            <p>Precio de alquiler: ${{ aeronave.precio }}</p>
+            <p>Capacidad de Tripulantes: <span class="text-muted">{{ aeronave.capacidadTripulantes }}</span></p>
+            <p>Disponible: <span class="text-muted">{{ aeronave.disponible ? 'Si' : 'No' }}</span></p>
+            <p >Descripción</p>
+            <p class="text-muted">{{ aeronave.descripcion }}</p>
         </div>
     </div>
 

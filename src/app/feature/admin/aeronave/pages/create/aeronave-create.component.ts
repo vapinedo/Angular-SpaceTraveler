@@ -29,6 +29,9 @@ export class AeronaveCreateComponent implements OnDestroy {
   public readonly allowedFormats = '.jpeg,.jpg,.png,.svg';
   private readonly validFormats: string[] = ['image/jpeg', 'image/png'];
 
+  public readonly MIN_LENGTH_DESCRIPCION = 10;
+  public readonly MAX_LENGTH_DESCRIPCION = 120;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -40,7 +43,12 @@ export class AeronaveCreateComponent implements OnDestroy {
         disponible: [false],
         nombre: [null, [Validators.required]],
         imagen: [null, [Validators.required]],
-      capacidadTripulantes: [null, [Validators.required]]
+        precio: [null, [Validators.required]],
+        descripcion: [null, [
+          Validators.minLength(this.MIN_LENGTH_DESCRIPCION),
+          Validators.maxLength(this.MAX_LENGTH_DESCRIPCION)
+        ]],
+        capacidadTripulantes: [null, [Validators.required]]
     }); 
   }
   
@@ -94,7 +102,9 @@ export class AeronaveCreateComponent implements OnDestroy {
     let response: Aeronave = {
       nombre: data.nombre,
       imagen: fileURL,
+      precio: data.precio,
       disponible: data.disponible,
+      descripcion: data.descripcion,
       capacidadTripulantes: data.capacidadTripulantes
     };
     return response;

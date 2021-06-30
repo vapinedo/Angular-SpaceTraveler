@@ -1,12 +1,13 @@
-<section class="row row-cols-1 row-cols-md-3 g-4">
+<section class="row">
 
   <article class="col-md-3" *ngFor="let nave of aeronaves">
-    <div class="card">
+    <div class="card animate__animated animate__fadeIn animate_faster">
       <img [src]="nave.imagen" class="card-img-top" [alt]="nave.nombre">
       <div class="card-body">
-        <h5 class="card-title">{{ nave.nombre }}</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <button class="btn btn-outline-primary">Ver Detalles</button>
+        <h5 class="card-title text-primary">{{ nave.nombre }}</h5>
+        <p class="card-text price">Valor alquiler: {{ nave.precio | currency }}</p>
+        <p class="card-text">{{ nave.descripcion }}</p>
+        <button class="btn btn-outline-primary">Alquilar esta nave</button>
       </div>
     </div>
   </article>
