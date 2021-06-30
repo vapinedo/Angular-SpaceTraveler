@@ -16,9 +16,15 @@ export class RegisterComponent {
 
   public subscriptions = new Subscription();
 
+  private readonly defaultRol = 'pasajero';
+  public readonly MIN_LENGTH_NOMBRE = 3;
+  public readonly MAX_LENGTH_NOMBRE = 20;
+  public readonly MAX_LENGTH_APELLIDOS = 50;
+  public readonly MIN_LENGTH_PASSWORD = 6;
+  public readonly MAX_LENGTH_PASSWORD = 12;
+
   public form: FormGroup;
   public authError = false;
-  private defaultRol = 'pasajero';
   public showSpinner: boolean = false;
   public title = 'Space Traveler - Registro';
   
@@ -30,15 +36,26 @@ export class RegisterComponent {
     private validatorsSvc: ValidatorsService,
     ) {
       this.form = this.fb.group({
-        nombre: [null, [Validators.required]],
-        apellidos: [null, [Validators.required]],
+        nombre: [null, [
+          Validators.required,
+          Validators.minLength(this.MIN_LENGTH_NOMBRE), 
+          Validators.maxLength(this.MAX_LENGTH_NOMBRE), 
+        ]],
+        apellidos: [null, [
+          Validators.required,
+          Validators.minLength(this.MIN_LENGTH_NOMBRE), 
+          Validators.maxLength(this.MAX_LENGTH_APELLIDOS), 
+        ]],
         rol: [this.defaultRol, [Validators.required]],
         email: [null, [
           Validators.required,
           Validators.pattern(this.validatorsSvc.VALID_EMAIL_STRING)
         ]],
-        password: [null, [Validators.required]],
-        confirmar_password: [null, [Validators.required]]
+        password: [null, [
+          Validators.required,
+          Validators.minLength(this.MIN_LENGTH_PASSWORD), 
+          Validators.maxLength(this.MAX_LENGTH_PASSWORD), 
+        ]]
       }); 
     }
 
