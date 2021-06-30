@@ -40,12 +40,12 @@ export class AlquilerCreateComponent implements OnInit, OnDestroy {
       this.aeronaveID = activatedRoute.snapshot.paramMap.get('naveID');
 
       this.form = this.fb.group({
-        userID: [null],
-        destino: [null],
-        aeronaveID: [null],
-        fechaPartida: [null],
-        fechaRegreso: [null],
-        numeroPasajeros: [null]
+        userID: [null, [Validators.required]],
+        destino: [null, [Validators.required]],
+        aeronaveID: [null, [Validators.required]],
+        fechaPartida: [null, [Validators.required]],
+        fechaRegreso: [null, [Validators.required]],
+        numeroPasajeros: [null, [Validators.required]]
       }); 
   }
 

@@ -40,7 +40,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="mb-4">
+            <mat-form-field *ngIf="form.controls.fechaPartida.valid" appearance="outline" class="mb-4 animate__animated animate__fadeIn animate_faster">
                 <mat-label>Fecha de regreso *</mat-label>
                 <input 
                 readonly 
