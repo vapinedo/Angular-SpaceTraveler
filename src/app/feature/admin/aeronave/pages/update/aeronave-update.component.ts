@@ -1,9 +1,11 @@
 import { SubSink } from 'subsink';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Aeronave } from '@core/interfaces/aeronave.interface';
 import { MessageService } from '@core/services/message.service';
-import { PropertyService } from '@core/services/property.service';
+import { AeronaveService } from '@core/services/aeronave.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FileuploaderService } from '@core/services/fileuploader.service';
 
 @Component({
   selector: 'app-aeronave-update',
@@ -15,31 +17,33 @@ export class AeronavePropertyUpdateComponent implements OnInit, OnDestroy {
   private subscriptions = new SubSink();
 
   public form: FormGroup;
-  public propertyID: any;
-  private files: any = null;
+  public aeronaveID: any;
+  private file: any = null;
   public showSpinner: boolean = false;
-  public imgPreviewUrls: string[] = [];
-  public title = 'Propiedad Actualizar';
+
+  public imgPreviewUrl: string[] = [];
+  public title = 'Aeronave Actualizar';
 
   public isInvalidFormats: boolean = false;
   public readonly allowedFormats = '.jpeg,.jpg,.png,.svg';
   private readonly validFormats: string[] = ['image/jpeg', 'image/png'];
 
   constructor(
-    // private router: Router,
+    private router: Router,
     private fb: FormBuilder,
     private messageSvc: MessageService,
-    private propertySvc: PropertyService,
+    private aeronaveSvc: AeronaveService,
     private activatedRoute: ActivatedRoute,
-    // private fileuploaderSvc: FileuploaderService
+    private fileuploaderSvc: FileuploaderService
   ) {
-    this.propertyID = activatedRoute.snapshot.paramMap.get('id');
+    this.aeronaveID = activatedRoute.snapshot.paramMap.get('id');
 
     this.form = this.fb.group({
-      id: [null, Validators.required],
-      price: [null, Validators.required],
-      images: [null, [Validators.required]],
-      category: [null, [Validators.required]]
+      imagen: [null],
+      disponible: [false],
+      id: [null, [Validators.required]],
+      nombre: [null, [Validators.required]],
+      capacidadTripulantes: [null, [Validators.required]]
     }); 
   }
 
@@ -49,32 +53,83 @@ export class AeronavePropertyUpdateComponent implements OnInit, OnDestroy {
 
   private _setForm(): void {
     this.subscriptions.add(
-      this.propertySvc.readOne(this.propertyID)
+      this.aeronaveSvc.readOne(this.aeronaveID)
         .subscribe({
           next: data => {
             this.form.patchValue({
-              id: this.propertyID,
-              price: data?.price,
-              images: 'imagenes',
-              category: data?.category
+              id: this.aeronaveID,
+              imagen: data?.imagen,
+              nombre: data?.nombre,
+              capacidadTripulantes: data?.capacidadTripulantes
             });
-            this.imgPreviewUrls = (data?.images) ? data?.images : [];
           },
           error: err => this.messageSvc.error(err)
         })
     );
   }
 
-  onFileChange(event: any): void {
+  onFileChange(event: any) {
+    this.file = event.target.files;
+
+    if (this.file && this._filesIsImage(this.file)) {
+      this._generateImgPreview(this.file);
+    } else {
+      this.isInvalidFormats = true;
+    }
+    return; 
   }
 
-  onSubmit(): void {
+  private _generateImgPreview(file: FileList): void {
+    const reader = new FileReader();
+    reader.onload = () => this.imgPreviewUrl.push(reader.result as string);
+    reader.readAsDataURL(file[0]);
+  }
+
+  private _filesIsImage(file: any): boolean {
+    const format = file[0].type;
+    return this.validFormats.includes(format) ? true : false;
+  }
+
+  async onSubmit(): Promise<void> {
     if (this.form.valid) {
-      // const image = this.images[0];
-      // const property = this.form.value;
-      // this.propertySvc.update(property, image);
+      this.form.disable();
+      this.showSpinner = true;
+      const formData = this.form.value;
+
+      try {
+        let fileURL: string = '';
+        if (this.file) {
+          console.log('SI')
+          fileURL = await this.fileuploaderSvc.upload(this.file[0]);
+        } else {
+          console.log('NO')
+          fileURL = formData.imagen;
+        }
+
+        const newData = this._prepareDataBeforeSend(formData, fileURL);
+        const dataCreated = await this.aeronaveSvc.update(newData);
+
+        this.showSpinner = false;
+        this.messageSvc.success('Registro actualizado exitosamente');
+        this.router.navigate(['/admin/aeronaves']);
+      }
+      catch (err) { 
+        this.showSpinner = false;
+        this.messageSvc.error(err); 
+      }
     }
     return;
+  }
+
+  private _prepareDataBeforeSend(data: any, fileURL: string): Aeronave {
+    let response: Aeronave = {
+      id: data.id,
+      imagen: fileURL,
+      nombre: data.nombre,
+      disponible: data.disponible,
+      capacidadTripulantes: data.capacidadTripulantes
+    };
+    return response;
   }
 
   ngOnDestroy(): void {

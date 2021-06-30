@@ -2,6 +2,6 @@ export interface Aeronave {
     id?: string;
     nombre: string;
     imagen: string;
-    estado: boolean;
+    disponible: boolean;
     capacidadTripulantes: number;
 }

@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { PropertyService } from '@core/services/property.service';
-import { Property } from '@core/interfaces/property.interface';
+import { Aeronave } from '@core/interfaces/aeronave.interface';
+import { AeronaveService } from '@core/services/aeronave.service';
 
 @Component({
   selector: 'app-aeronave-detail',
@@ -11,16 +11,17 @@ import { Property } from '@core/interfaces/property.interface';
 })
 export class AeronaveDetailComponent implements OnInit {
 
-  public title = 'Propiedad Detalle';
-  public property$!: Observable<Property | undefined>;
+  public title = 'Aeronave Detalles';
+  public aeronave$!: Observable<Aeronave | undefined>;
 
   constructor(
-    private propertySvc: PropertyService,
+    private aeronaveSvc: AeronaveService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params.id;
-    this.property$ = this.propertySvc.readOne(id);
+    console.log('ID', id)
+    this.aeronave$ = this.aeronaveSvc.readOne(id);
   }
 }

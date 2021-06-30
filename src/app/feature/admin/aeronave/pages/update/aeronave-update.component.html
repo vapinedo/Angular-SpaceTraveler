@@ -1,41 +1,39 @@
-<section>
-    <h2>{{ title }}</h2>
-
-    <article class="box animate__animated animate__fadeIn animate_faster">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
-
-            <mat-form-field appearance="outline">
-                <mat-label>Categoría</mat-label>
-                <input matInput type="text" formControlName="category">
-            </mat-form-field>       
+<article class="box animate__animated animate__fadeIn animate_faster">
     
-            <mat-form-field appearance="outline">
-                <mat-label>Precio</mat-label>
-                <input matInput type="text" formControlName="price">
-            </mat-form-field>       
+    <header class="section_header">
+        <h2>{{ title }}</h2>
+        <button routerLink="/admin/aeronaves" class="btn btn-danger">Atrás</button>
+    </header>
 
-            <mat-form-field appearance="outline" class="file-wrapper">
-                <article class="fileupload">
-                    <button [disabled]="showSpinner">
-                        Subir fotos
-                        <input (input)="onFileChange($event)" type="file" multiple [accept]="allowedFormats">
-                    </button>
-                    <img *ngFor="let url of imgPreviewUrls" [src]="url">
-                </article>
-                
-                <input [hidden]="true" readonly matInput type="text" formControlName="images">
-            </mat-form-field>       
-            <!-- <p *ngIf="isInvalidFormats">Solo puede subir imágenes JPEG, JPG o PNG</p> -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off" class="row">
+        <div class="fileupload col-md-4">
+            <article class="upload_control">
+                <label class="form-label">Imagen *</label>
+                <img [src]="imgPreviewUrl.length > 0 ? imgPreviewUrl : form.controls.imagen.value" class="default_image">
+                <input (input)="onFileChange($event)" type="file" [accept]="allowedFormats">
+            </article>
+        </div>
 
-            <div class="footer">
-                <app-spinner *ngIf="showSpinner"></app-spinner>
-                <button 
-                    *ngIf="!showSpinner" 
-                    [disabled]="form.invalid" 
-                    type="submit" color="primary" mat-raised-button>Crear</button>
+        <article class="col-md-8">
+            <div class="mb-4">
+                <label class="form-label">Nombre de la aeronave *</label>
+                <input type="text" formControlName="nombre" class="form-control">
             </div>
-            
-        </form>
-    </article>
 
-  </section>
+            <div class="mb-4">
+                <label class="form-label">Capacidad de tripulantes *</label>
+                <input type="type" formControlName="capacidadTripulantes" class="form-control">
+            </div>
+
+            <div class="mb-4 form-check form-switch">
+                <label class="form-label">Disponible?</label>
+                <input class="form-check-input" type="checkbox">
+            </div>
+
+            <div class="form-footer">
+                <app-spinner *ngIf="showSpinner"></app-spinner>
+                <button *ngIf="!showSpinner" [disabled]="form.invalid" type="submit" class="btn btn-primary">Actualizar</button>
+            </div>        
+        </article>
+    </form>
+</article>

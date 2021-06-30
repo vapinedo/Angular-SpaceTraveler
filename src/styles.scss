@@ -1,9 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif; 
+}
+
+body {
+    height: 100vh;
+}
+
 /* -------------------------------------------------------
     Utilitarios
  ------------------------------------------------------- */
+ .section_header {
+     display: flex;
+     margin-bottom: 2em;
+     align-items: center;
+     justify-content: space-between;
+ }
 .box {
     padding: 24px;
     border-radius: 5px;
     background-color: #fff;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.fileupload {
+    .upload_control{ 
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+
+        .default_image {
+            width: 100%;
+        }
+        input[type=file] {
+            top: 0;
+            left: 0;
+            opacity: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        } 
+    }
+}
+.actions {
+    i {
+        cursor: pointer;
+        font-size: 1.2em;
+        margin-right: 1em;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
 }

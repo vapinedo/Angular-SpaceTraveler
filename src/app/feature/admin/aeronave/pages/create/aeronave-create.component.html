@@ -1,96 +1,39 @@
 <article class="box animate__animated animate__fadeIn animate_faster">
-    <h2>{{ title }}</h2>
+    
+    <header class="section_header">
+        <h2>{{ title }}</h2>
+        <button routerLink="/admin/aeronaves" class="btn btn-danger">Atrás</button>
+    </header>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
-        <div class="row">
-            <div class="col-md-5 fileupload">
-                <article class="upload_control">
-                    <img *ngIf="imgPreviewUrls.length === 0" [src]="defaultImage" class="default_image">
-                    <input (input)="onFileChange($event)" type="file" multiple [accept]="allowedFormats">
-                </article>
-
-                <div class="image_preview_container">
-                    <div *ngFor="let url of imgPreviewUrls; let i = index" class="image_preview">
-                        <img [src]="url"> 
-                        <i class='bx bxs-star featured' *ngIf="i === 0"></i>
-                        <span class="image_remove">
-                            <i *ngIf="i !== 0" class='bx bx-star' matTooltip="Destacar" matTooltipPosition="left"></i>
-                            <i (click)="onDeleteImage(i)" class='bx bx-x-circle' matTooltip="Eliminar" matTooltipPosition="right"></i>
-                        </span>
-                    </div>
-                </div>
-            </div><!-- form col 1 -->
-
-            <div class="col-md-7">
-                <article class="row">
-                    <mat-form-field appearance="outline" class="col">
-                        <mat-label>Categoría *</mat-label>
-                        <mat-select formControlName="category" disableRipple>
-                            <mat-option *ngFor="let item of propertyCategories$ | async" [value]="item.name">
-                                {{ item.name }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>       
-            
-                    <mat-form-field appearance="outline" class="col">
-                        <mat-label>Tipo de operación *</mat-label>
-                        <mat-select formControlName="operationType" disableRipple>
-                            <mat-option *ngFor="let item of operationType" [value]="item.value">
-                                {{ item.key }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>       
-                </article>
-    
-                <article class="row">
-                    <mat-form-field appearance="outline" class="col">
-                        <mat-label>Barrio *</mat-label>
-                        <mat-select formControlName="neighborhood" disableRipple>
-                            <mat-option *ngFor="let item of neighborhoods$ | async" [value]="item.name">
-                                {{ item.name }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>       
-    
-                    <mat-form-field appearance="outline" class="col">
-                        <mat-label>Precio *</mat-label>
-                        <input matInput type="text" formControlName="price">
-                    </mat-form-field>       
-                </article>
-    
-                <article class="row">
-                    <mat-form-field appearance="outline" class="col">
-                        <mat-label>Dirección *</mat-label>
-                        <input matInput type="text" formControlName="address">
-                    </mat-form-field>       
-                
-                    <mat-form-field appearance="outline" class="col">
-                        <mat-label>Propietario *</mat-label>
-                        <mat-select formControlName="ownerID" disableRipple>
-                            <mat-option *ngFor="let item of owners$ | async" [value]="item.id">
-                                {{ item.name }} {{ item.lastname }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>       
-                </article>
-    
-                <div class="custom_mat_form_field_inline">
-                    <mat-label>Visible?</mat-label>
-                    <mat-slide-toggle disableRipple formControlName="visible"></mat-slide-toggle>
-                </div>  
-    
-                <mat-form-field appearance="outline">
-                    <mat-label>Obervaciones</mat-label>
-                    <textarea matInput rows="4" type="text" formControlName="description"></textarea>
-                </mat-form-field>       
-            </div><!-- form col 1 -->
-        </div><!-- form row 1 -->
-
-        <div class="form_footer">
-            <app-spinner *ngIf="showSpinner"></app-spinner>
-            <button *ngIf="!showSpinner" [disabled]="form.invalid" 
-                type="submit" color="primary" mat-raised-button>Crear</button>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off" class="row">
+        <div class="fileupload col-md-4">
+            <article class="upload_control">
+                <label class="form-label">Imagen *</label>
+                <img [src]="imgPreviewUrl.length > 0 ? imgPreviewUrl : defaultImage" class="default_image">
+                <input (input)="onFileChange($event)" type="file" [accept]="allowedFormats">
+            </article>
         </div>
-        
+
+        <article class="col-md-8">
+            <div class="mb-4">
+                <label class="form-label">Nombre de la aeronave *</label>
+                <input type="text" formControlName="nombre" class="form-control">
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Capacidad de tripulantes *</label>
+                <input type="type" formControlName="capacidadTripulantes" class="form-control">
+            </div>
+
+            <div class="mb-4 form-check form-switch">
+                <label class="form-label">Disponible?</label>
+                <input class="form-check-input" type="checkbox">
+            </div>
+
+            <div class="form-footer">
+                <app-spinner *ngIf="showSpinner"></app-spinner>
+                <button *ngIf="!showSpinner" [disabled]="form.invalid" type="submit" class="btn btn-primary">Crear</button>
+            </div>        
+        </article>
     </form>
 </article>

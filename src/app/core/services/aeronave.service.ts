@@ -34,7 +34,7 @@ export class AeronaveService {
       .valueChanges();
   }
 
-  public update(item: Aeronave, newFile?: any) {
+  public update(item: Aeronave) {
     return this.afs.collection<Aeronave>(this.collectionName)
       .doc(item.id).update(item);
   }

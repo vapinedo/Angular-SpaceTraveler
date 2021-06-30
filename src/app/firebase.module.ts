@@ -17,7 +17,7 @@ const modules = [
     imports: [modules],
     exports: [modules],
     providers: [ 
-        { provide: BUCKET, useValue: 'gs://ng-arriendos-uribia.appspot.com' }
+        { provide: BUCKET, useValue: 'gs://catalogo-revistas.appspot.com' }
     ]
 })
 export class FirebaseModule { }

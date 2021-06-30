@@ -1,19 +1,31 @@
-<h2>{{ title }}</h2>
-        
 <article class="box animate__animated animate__fadeIn animate_faster">
-    <button routerLink="crear" mat-raised-button color="primary">Crear nuevo</button>
 
-    <table class="animate__animated animate__fadeIn animate__faster">
+    <header class="section_header">
+        <h2>{{ title }}</h2>
+        <button routerLink="/admin/aeronaves/crear" class="btn btn-primary">Crear nuevo</button>
+    </header>
+
+    <table class="table">
         <thead>
             <th>Imagen</th>
             <th>Nombre</th>
-            <th>Capacidad tripulantes</th>
-            <th>Estado</th>
-            <th>Capacidad tripulantes</th>
+            <th>Tripulantes</th>
+            <th>Disponible</th>
+            <th>Acciones</th>
         </thead>
 
         <tbody>
-            <tr ></tr>
+            <tr *ngFor="let nave of aeronaves">
+                <td><img [src]="nave.imagen" width="60"></td>
+                <td>{{ nave.nombre }}</td>
+                <td>{{ nave.capacidadTripulantes }}</td>
+                <td>{{ nave.disponible ? 'Si' : 'No' }}</td>
+                <td class="actions">
+                    <i [routerLink]="['/admin/aeronaves/detalle', nave.id]" class='bx bx-show-alt' title="Ver Detalles"></i>
+                    <i [routerLink]="['/admin/aeronaves/editar', nave.id]" class='bx bx-pencil' title="Editar"></i>
+                    <i (click)="onDelete(nave.id)" class='bx bx-trash-alt' title="Eliminar"></i>
+                </td>
+            </tr>
         </tbody>
     </table>
 </article>

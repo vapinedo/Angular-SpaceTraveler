@@ -1,16 +1,21 @@
-<section>
-    <h2>{{ title }}</h2>
+<article class="box animate__animated animate__fadeIn animate_faster">
 
-    <article
-        *ngIf="property$ | async as property; else loading"
-        class="box animate__animated animate__fadeIn animate_faster">
-        <h3>{{ property.category }}</h3>
-        <p>${{ property.price }}</p>
-        <img *ngFor="let img of property.images" [src]="img" height="120">
-    </article>
+    <header class="section_header">
+        <h2>{{ title }}</h2>
+        <button routerLink="/admin/aeronaves" class="btn btn-danger">Atrás</button>
+    </header>
+
+    <div *ngIf="aeronave$ | async as aeronave; else loading" class="row">
+        <img [src]="aeronave.imagen" class="col-md-4">
+        <div class="col-md-8">
+            <h3>{{ aeronave.nombre }}</h3>
+            <p class="text-muted">Capacidad de Tripulantes: {{ aeronave.capacidadTripulantes }}</p>
+            <p class="text-muted">Disponible: {{ aeronave.disponible ? 'Si' : 'No' }}</p>
+        </div>
+    </div>
 
     <ng-template #loading>
         <app-spinner></app-spinner>
     </ng-template>
 
-  </section>
+</article>
