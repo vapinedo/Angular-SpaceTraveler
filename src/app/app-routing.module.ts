@@ -14,6 +14,11 @@ const routes: Routes = [
     component:  AdminComponent,
     children: [
       {  
+        path: 'catalogo',
+        loadChildren: () => import('@feature/admin/catalogo/catalogo.module')
+        .then(m => m.CatalogoModule)
+      },      
+      {  
         path: 'aeronaves',
         loadChildren: () => import('@feature/admin/aeronave/aeronave.module')
         .then(m => m.AeronaveModule)
@@ -25,8 +30,8 @@ const routes: Routes = [
       }      
     ]
   },
-  { path: '', redirectTo: '/admin/aeronaves',  pathMatch: 'full' },
-  { path: '***', redirectTo: '/admin/aeronaves' }
+  { path: '', redirectTo: '/admin/catalogo',  pathMatch: 'full' },
+  { path: '***', redirectTo: '/admin/catalogo' }
 ];
 
 @NgModule({
